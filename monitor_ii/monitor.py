@@ -32,7 +32,7 @@ def save_cpu_data():
         session.commit()
         cpu_time = cpu_dt.strftime("%H:%M:%S")
         cpu_date = cpu_dt.date()
-        print("Date:", cpu_date, "Time: ", cpu_time, " CPU Load At:", psutil.cpu_percent(), "%")
+        print("Date:", cpu_date, "Time: ", cpu_time, " CPU Load At:", cpu_usage, "%")
         sleep(5)
         counter += 1
         if counter < 12:
