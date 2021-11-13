@@ -9,7 +9,7 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@monitor_app.route("/api/device-load")
+@monitor_app.route("/api/cpu-load")
 def handle_form():
     cpu_load = psutil.cpu_percent()
     return {'CPU Load': cpu_load}
@@ -33,6 +33,11 @@ def get_api_pressure():
 @monitor_app.route("/api/humidity")
 def get_api_humidity():
     return {"Humidity": None}
+
+
+@monitor_app.route("/api/does-not-exist")
+def get_api_does_not_exist():
+    return {"ERROR": "Route Not Implemented"}
 
 
 if __name__ == '__main__':
