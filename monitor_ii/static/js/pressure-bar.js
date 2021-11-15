@@ -1,4 +1,3 @@
-//doing this without a JS editor is killing me
 
 var barChartCanvasPressure = document.getElementById("Pressure-Bar")
 
@@ -22,9 +21,9 @@ var barOptions = {
     }
 
 async function getPressure(){
-    let link = 'http://127.0.0.1:5000/api/pressure';
-    let result = await fetch(link);
-    return await result.json();
+    let url = 'http://127.0.0.1:5000/api/pressure';
+    let data = await fetch(url);
+    return await data.json();
 
 }
 

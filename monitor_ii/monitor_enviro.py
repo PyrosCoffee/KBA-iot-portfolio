@@ -1,4 +1,3 @@
-
 """
 modified monitor.py to suit environment needs
 """
@@ -7,13 +6,12 @@ import psutil
 from time import sleep
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db import Base, db_name, db_folder
-from cpu import CPU
 from datetime import datetime
 from mypi import get_host_name, get_serial, get_mac
 from db import Base, EnvironmentTPH, db_name, db_folder
 
 _db_filename = db_folder + db_name
+
 
 def save_enviro_data():
     counter = 0
@@ -24,14 +22,26 @@ def save_enviro_data():
         Base.metadata.create_all(engine)
         session = sessionmaker(bind=engine)()
         environmentData = EnvironmentTPH()
-        # dont know if i have to leave CPU here? fix later
-        cpu_usage = psutil.cpu_percent()
+        environmentData.cpu_load = psutil.cpu_percent()
+        environmentData.device_name = get_host_name()
+        environmentData.device_serial = get_serial()
+        environmentData.device_mac = get_mac()
+        environmentData.temperature = 26.5
+        environmentData.pressure = 986
+        environmentData.humidity = 35.7
+        environmentData.created_at = datetime.now()
+        session.add(environmentData)
+        session.commit()
 
-
-        print("Date:", cpu_date, "Time: ", cpu_time, " CPU Load At:", cpu_usage, "%")
+        print("Device Name:", environmentData.device_name, "Serial: ", environmentData.device_serial, "MAC:",
+              environmentData.device_mac,)
         sleep(5)
         counter += 1
         if counter < 12:
             launch = True
         else:
             launch = False
+
+
+if __name__ == "__main__":
+    save_enviro_data()

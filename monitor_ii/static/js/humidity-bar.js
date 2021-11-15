@@ -6,7 +6,7 @@ var barData = {
          label: "Humidity",
          data: [32],
          borderWidth: 2,
-         backgroundColor: ["rgba( 157, 105, 163, 1)"],
+         backgroundColor: ["rgba(157, 105, 163, 1)"],
          borderColor: ["rgba( 33, 26, 29, 1)"],
          }],
     }
@@ -26,9 +26,9 @@ var myChartHumidity = new Chart(barChartCanvasHumidity, {
 });
 
 async function getHumidity(){
-    let link = 'http://127.0.0.1:5000/api/humidity';
-    let result = await fetch(link);
-    return await result.json();
+    let url = 'http://127.0.0.1:5000/api/humidity';
+    let data = await fetch(url);
+    return await data.json();
 }
 
 

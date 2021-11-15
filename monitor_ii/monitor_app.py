@@ -1,10 +1,10 @@
 import psutil
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import json
 from db import Base, db_folder, db_name, EnvironmentTPH
 
+_db_filename = db_folder + db_name
 monitor_app = Flask(__name__)
 
 
@@ -23,20 +23,20 @@ def cpu_load_chart():
 
 @monitor_app.route("/api/temperature")
 def get_api_temperature():
-    DBE = create_engine(f"sqlite:///{db_name}")
-    Base.metadata.create_all(DBE)
-    session = sessionmaker(bind=DBE)()
+    dbe = create_engine(f"sqlite:///{db_name}")
+    Base.metadata.create_all(dbe)
+    session = sessionmaker(bind=dbe)()
     environData = session.query(EnvironmentTPH).limit(1)
     for data in environData:
-        temp = data.temp
-        return {"Temperature": temp}
+        temperature = data.temperature
+        return {"Temperature": temperature}
 
 
 @monitor_app.route("/api/pressure")
 def get_api_pressure():
-    DBE = create_engine(f"sqlite:///{db_name}")
-    Base.metadata.create_all(DBE)
-    session = sessionmaker(bind=DBE)()
+    dbe = create_engine(f"sqlite:///{db_name}")
+    Base.metadata.create_all(dbe)
+    session = sessionmaker(bind=dbe)()
     environData = session.query(EnvironmentTPH).limit(1)
     for data in environData:
         pressure = data.pressure
@@ -45,28 +45,29 @@ def get_api_pressure():
 
 @monitor_app.route("/api/humidity")
 def get_api_humidity():
-    DBE = create_engine(f"sqlite:///{db_name}")
-    Base.metadata.create_all(DBE)
-    session = sessionmaker(bind=DBE)()
+    dbe = create_engine(f"sqlite:///{db_name}")
+    Base.metadata.create_all(dbe)
+    session = sessionmaker(bind=dbe)()
     environData = session.query(EnvironmentTPH).limit(1)
     for data in environData:
         humidity = data.humidity
         return {"Humidity": humidity}
 
 
-@monitor_app.route("/api/environment")
+@monitor_app.route("/api/environment/")
 def get_api_environment():
-    DBE = create_engine(f"sqlite:///{db_name}")
-    Base.metadata.create_all(DBE)
-    session = sessionmaker(bind=DBE)()
+    dbe = create_engine(f"sqlite:///{db_name}")
+    Base.metadata.create_all(dbe)
+    session = sessionmaker(bind=dbe)()
     environData = session.query(EnvironmentTPH).limit(1)
     displayData = []
     for data in environData:
-        temp = data.temp
+        temperature = data.temperature
         pressure = data.pressure
         humidity = data.humidity
-        environment = {"Temperature": temp, "Pressure": pressure, "Humidity": humidity}
+        environment = {"Temperature": temperature, "Pressure": pressure, "Humidity": humidity}
         displayData.append(environment)
+        return environment
 
 
 @monitor_app.route("/api/does-not-exist")

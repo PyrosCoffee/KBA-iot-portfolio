@@ -1,5 +1,3 @@
-//i did fixed api values first to get used to scripting AJAX calls, then did current CPU values
-
 
 var pieChartCanvasDeviceLoad = document.getElementById('Device-Load-Pie')
 
@@ -9,9 +7,9 @@ var pieOptions = {}
 //pulls current cpu info from the api
 //probably a better way to do this, update later
 async function getCPUInfo(){
-    let link = 'http://127.0.0.1:5000/api/cpu-load';
-    let result = await fetch(link);
-    return await result.json();
+    let url = 'http://127.0.0.1:5000/api/cpu-load';
+    let data = await fetch(url);
+    return await data.json();
 
 }
 // mess of code that displays current cpu load and idle in a pie chart
