@@ -1,16 +1,16 @@
 import psutil
-from flask import Flask
+from flask import Flask, render_template, jsonify
 
 monitor_app = Flask(__name__)
 
 
 @monitor_app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def index():
+    return render_template("/index.html")
 
 
 @monitor_app.route("/api/cpu-load")
-def handle_form():
+def cpu_load_chart():
     cpu_load = psutil.cpu_percent()
     return {'CPU Load': cpu_load}
 
@@ -22,7 +22,12 @@ def get_api_environment():
 
 @monitor_app.route("/api/temperature")
 def get_api_temperature():
-    return {"Temperature": None}
+    return {"Temperature": fixed_temp(1)}
+
+
+@monitor_app.route("/api/temperature/{qty}")
+def fixed_temp(qty=1):
+    return {"28 Celsius"}
 
 
 @monitor_app.route("/api/pressure")
