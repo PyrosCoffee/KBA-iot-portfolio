@@ -42,7 +42,7 @@ def save_cpu_data():
 
 
 """
-Old code that I might use -- Ignore
+Old code -- Ignore
 def get_cpu_load():
     interval = 0
     launch = True

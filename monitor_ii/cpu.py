@@ -2,6 +2,7 @@ from db import Base
 from sqlalchemy import Column, Integer, Float, DateTime, func
 
 
+# cpu class for storing info
 class CPU(Base):
     __tablename__ = 'cpu'
     id = Column(Integer, primary_key=True, autoincrement="auto")
