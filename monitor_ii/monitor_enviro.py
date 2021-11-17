@@ -18,7 +18,7 @@ def save_enviro_data():
     launch = True
 
     while launch:
-        engine = create_engine(f"sqlite:///{db_name}")
+        engine = create_engine(f"sqlite:///{_db_filename}")
         Base.metadata.create_all(engine)
         session = sessionmaker(bind=engine)()
         environmentData = EnvironmentTPH()
@@ -26,18 +26,20 @@ def save_enviro_data():
         environmentData.device_name = get_host_name()
         environmentData.device_serial = get_serial()
         environmentData.device_mac = get_mac()
-        environmentData.temperature = 26.5
+        environmentData.temperature = 40
         environmentData.pressure = 986
         environmentData.humidity = 35.7
         environmentData.created_at = datetime.now()
         session.add(environmentData)
         session.commit()
 
+        saveTime = environmentData.created_at.strftime("%H:%M:%S")
+
         print("Device Name:", environmentData.device_name, "Serial: ", environmentData.device_serial, "MAC:",
-              environmentData.device_mac,)
+              environmentData.device_mac,"Time: ", saveTime)
         sleep(5)
         counter += 1
-        if counter < 12:
+        if counter < 6:
             launch = True
         else:
             launch = False

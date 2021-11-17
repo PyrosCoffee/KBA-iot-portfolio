@@ -7,7 +7,8 @@ from sqlalchemy.orm import sessionmaker
 from db import Base
 from cpu import CPU
 
-db_filename = 'monitoring_cpu.db'
+db_filename = "monitoring_cpu.db"
+
 
 # opens db and displays info
 def main():
